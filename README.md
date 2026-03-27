@@ -81,11 +81,14 @@ This is checked by comparing `content_item.last_updated` against
 `flag.reviewed_at`.
 
 ## Data Source
-Uses NewsAPI (https://newsapi.org) to fetch real articles.
-Create a `local_settings.py` file in the root folder with:
+Uses **NewsAPI** (https://newsapi.org) to fetch real articles via 
+the `POST /api/fetch/` endpoint.
+
+To run locally, create a `local_settings.py` file in the root folder:
 ```python
-NEWS_API_KEY = '907e948f62fd493fb810ba3d771994ef'
+NEWS_API_KEY = 'your_newsapi_key_here'
 ```
+Get a free API key at https://newsapi.org.
 
 ## Assumptions & Trade-offs
 
