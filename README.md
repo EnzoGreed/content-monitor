@@ -16,7 +16,7 @@ venv\Scripts\activate.bat  # Windows
 source venv/bin/activate   # Mac/Linux
 
 # Install dependencies
-pip install django djangorestframework
+pip install django djangorestframework requests
 
 # Run migrations
 python manage.py migrate
@@ -50,10 +50,10 @@ curl -X PATCH http://127.0.0.1:8000/api/flags/1/ -H "Content-Type: application/j
 ```
 
 ## API Endpoints
-
 | Method | Endpoint | Purpose |
 |---|---|---|
 | POST | /api/keywords/ | Create a keyword |
+| POST | /api/fetch/ | Fetch real articles from NewsAPI |
 | POST | /api/scan/ | Trigger a scan on a content item |
 | GET | /api/flags/ | List all flags |
 | PATCH | /api/flags/{id}/ | Update review status |
@@ -102,13 +102,18 @@ This is checked by comparing `content_item.last_updated` against
 `flag.reviewed_at`.
 
 ## Data Source
+Uses **NewsAPI** (https://newsapi.org) to fetch real articles via 
+the `POST /api/fetch/` endpoint.
 
-Uses a mock dataset entered via the Django admin panel. Source field 
-is set to `mock` as per the alternative option in the assignment.
+To run locally, create a `local_settings.py` file in the root folder:
+```python
+NEWS_API_KEY = 'your_newsapi_key_here'
+```
+Get a free API key at https://newsapi.org.
 
 ## Assumptions & Trade-offs
 
 - SQLite used for simplicity as recommended
-- Mock data used instead of a live API integration
+- NewsAPI used for live article fetching via POST /api/fetch/
 - Scan is API-triggered rather than scheduled
 - Deduplication handled via `unique_together` on (keyword, content_item)
