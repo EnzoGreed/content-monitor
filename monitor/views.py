@@ -1,3 +1,4 @@
+from .fetcher import fetch_news
 from .scanner import scan_content
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -54,7 +55,7 @@ class FlagDetailView(APIView):
         return Response(serializer.data)
 
 
-class IngestView(APIView):
+class ScanView(APIView):
 
     def post(self, request):
         content_id = request.data.get('content_id')
@@ -75,4 +76,22 @@ class IngestView(APIView):
         return Response({
             'message': f'{len(flags)} flags created or updated',
             'flags': FlagSerializer(flags, many=True).data
+        })
+
+
+class FetchNewsView(APIView):
+
+    def post(self, request):
+        query = request.data.get('query', 'technology')
+        items, error = fetch_news(query)
+
+        if error:
+            return Response(
+                {'error': error},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response({
+            'message': f'{len(items)} new articles fetched',
+            'articles': ContentItemSerializer(items, many=True).data
         })
