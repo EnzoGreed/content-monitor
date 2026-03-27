@@ -27,6 +27,27 @@ python manage.py createsuperuser
 # Start server
 python manage.py runserver
 ```
+## Quick Start (after setup)
+
+**Step 1 — Add a keyword:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/keywords/ -H "Content-Type: application/json" -d '{"name": "python"}'
+```
+
+**Step 2 — Fetch real articles from NewsAPI:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/fetch/ -H "Content-Type: application/json" -d '{"query": "python"}'
+```
+
+**Step 3 — Scan for matches:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/scan/ -H "Content-Type: application/json" -d '{"content_id": 1}'
+```
+
+**Step 4 — Review a flag:**
+```bash
+curl -X PATCH http://127.0.0.1:8000/api/flags/1/ -H "Content-Type: application/json" -d '{"status": "relevant"}'
+```
 
 ## API Endpoints
 
