@@ -81,9 +81,11 @@ This is checked by comparing `content_item.last_updated` against
 `flag.reviewed_at`.
 
 ## Data Source
-
-Uses a mock dataset entered via the Django admin panel. Source field 
-is set to `mock` as per the alternative option in the assignment.
+Uses NewsAPI (https://newsapi.org) to fetch real articles.
+Create a `local_settings.py` file in the root folder with:
+```python
+NEWS_API_KEY = '907e948f62fd493fb810ba3d771994ef'
+```
 
 ## Assumptions & Trade-offs
 
