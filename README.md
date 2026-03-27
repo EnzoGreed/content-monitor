@@ -16,7 +16,7 @@ venv\Scripts\activate.bat  # Windows
 source venv/bin/activate   # Mac/Linux
 
 # Install dependencies
-pip install django djangorestframework
+pip install django djangorestframework requests
 
 # Run migrations
 python manage.py migrate
@@ -29,10 +29,10 @@ python manage.py runserver
 ```
 
 ## API Endpoints
-
 | Method | Endpoint | Purpose |
 |---|---|---|
 | POST | /api/keywords/ | Create a keyword |
+| POST | /api/fetch/ | Fetch real articles from NewsAPI |
 | POST | /api/scan/ | Trigger a scan on a content item |
 | GET | /api/flags/ | List all flags |
 | PATCH | /api/flags/{id}/ | Update review status |
@@ -93,6 +93,6 @@ Get a free API key at https://newsapi.org.
 ## Assumptions & Trade-offs
 
 - SQLite used for simplicity as recommended
-- Mock data used instead of a live API integration
+- NewsAPI used for live article fetching via POST /api/fetch/
 - Scan is API-triggered rather than scheduled
 - Deduplication handled via `unique_together` on (keyword, content_item)
