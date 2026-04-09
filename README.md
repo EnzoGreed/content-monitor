@@ -107,7 +107,7 @@ the `POST /api/fetch/` endpoint.
 
 To run locally, create a `local_settings.py` file in the root folder:
 ```python
-NEWS_API_KEY = 'your_newsapi_key_here'
+NEWS_API_KEY = '907e948f62fd493fb810ba3d771994ef'
 ```
 Get a free API key at https://newsapi.org.
 
