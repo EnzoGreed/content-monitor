@@ -1,52 +1,39 @@
 from .models import Keyword, ContentItem, Flag
 
-
-def compute_score(keyword_text, title, body):
-    title_lower = title.lower()
-    body_lower = body.lower()
-    keyword_lower = keyword_text.lower()
-
-    # Exact match in title (full title equals keyword)
-    if title_lower == keyword_lower:
-        return 100
-    # Partial match in title (keyword appears somewhere in title)
-    elif keyword_lower in title_lower:
-        return 70
-    # Keyword appears only in body
-    elif keyword_lower in body_lower:
-        return 40
-    else:
-        return 0
-
-
 def scan_content(content_item):
     keywords = Keyword.objects.all()
     flags_created = []
 
     for keyword in keywords:
-        score = compute_score(
-            keyword.name, content_item.title, content_item.body)
+        text = f"{content_item.title} {content_item.body}".lower()
+        keyword_text = keyword.name.lower()
+        count = text.count(keyword_text)
 
-        if score > 0:
+        if count > 0:
             flag, created = Flag.objects.get_or_create(
                 keyword=keyword,
                 content_item=content_item,
-                defaults={'score': score, 'status': 'pending'}
+                defaults={'score': count, 'status': 'pending'}
             )
 
             if not created:
+                # Flag already exists — check suppression logic
                 if flag.status == 'irrelevant':
-                    if (flag.reviewed_at and
-                            content_item.last_updated > flag.reviewed_at):
+                    # Was the content updated after the reviewer dismissed it?
+                    if (flag.reviewed_at and 
+                        content_item.last_updated > flag.reviewed_at):
+                        # Content changed — reset the flag
                         flag.status = 'pending'
-                        flag.score = score
+                        flag.score = count
                         flag.reviewed_at = None
                         flag.save()
                         flags_created.append(flag)
                     else:
+                        # Still suppressed — skip it
                         continue
                 else:
-                    flag.score = score
+                    # Not suppressed — update score normally
+                    flag.score = count
                     flag.save()
                     flags_created.append(flag)
             else:

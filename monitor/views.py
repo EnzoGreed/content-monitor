@@ -1,5 +1,6 @@
 from .fetcher import fetch_news
 from .scanner import scan_content
+from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,12 +11,25 @@ from .serializers import KeywordSerializer, ContentItemSerializer, FlagSerialize
 
 class KeywordListCreateView(APIView):
 
+    def get(self, request):
+        keywords = Keyword.objects.all().order_by('name')
+        serializer = KeywordSerializer(keywords, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
         serializer = KeywordSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ContentItemListView(APIView):
+
+    def get(self, request):
+        items = ContentItem.objects.all().order_by('-last_updated', '-id')
+        serializer = ContentItemSerializer(items, many=True)
+        return Response(serializer.data)
 
 
 class FlagListView(APIView):
@@ -95,3 +109,7 @@ class FetchNewsView(APIView):
             'message': f'{len(items)} new articles fetched',
             'articles': ContentItemSerializer(items, many=True).data
         })
+
+
+class DashboardView(TemplateView):
+    template_name = 'monitor/index.html'

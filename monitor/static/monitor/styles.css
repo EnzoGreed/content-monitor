@@ -1,0 +1,379 @@
+:root {
+    --bg-0: #fff6ea;
+    --bg-1: #ffe4d0;
+    --ink-0: #221b1a;
+    --ink-1: #5a4a45;
+    --accent: #ff5a36;
+    --accent-2: #0d8c7a;
+    --surface: rgba(255, 255, 255, 0.68);
+    --surface-strong: rgba(255, 255, 255, 0.86);
+    --border: rgba(34, 27, 26, 0.1);
+    --shadow: 0 16px 45px rgba(58, 24, 14, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: var(--ink-0);
+    background: linear-gradient(145deg, var(--bg-0), var(--bg-1));
+    overflow-x: hidden;
+}
+
+.bg-orb {
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(32px);
+    z-index: 0;
+}
+
+.orb-a {
+    top: -120px;
+    left: -80px;
+    background: rgba(255, 90, 54, 0.22);
+}
+
+.orb-b {
+    bottom: -150px;
+    right: -60px;
+    background: rgba(13, 140, 122, 0.22);
+}
+
+.shell {
+    width: min(1100px, 94vw);
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1,
+.panel h2,
+.board h2 {
+    margin: 0;
+    font-family: "DM Serif Display", Georgia, serif;
+    line-height: 1.1;
+}
+
+.hero {
+    background: var(--surface-strong);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+}
+
+.eyebrow {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    font-size: 0.8rem;
+}
+
+.hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin-top: 0.4rem;
+}
+
+.subtitle {
+    margin: 0.75rem 0 1.4rem;
+    color: var(--ink-1);
+    max-width: 70ch;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.stat-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.label {
+    margin: 0;
+    color: var(--ink-1);
+    font-size: 0.9rem;
+}
+
+.value {
+    margin: 0.35rem 0 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.controls {
+    margin-top: 1.4rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.panel {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.1rem;
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow);
+}
+
+.panel h2 {
+    font-size: 1.45rem;
+    margin-bottom: 0.6rem;
+}
+
+.stack {
+    display: grid;
+    gap: 0.55rem;
+}
+
+label {
+    color: var(--ink-1);
+    font-weight: 500;
+}
+
+.inline-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.55rem;
+}
+
+input,
+select,
+button {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    background: #ffffff;
+}
+
+button {
+    cursor: pointer;
+    padding: 0.65rem 1rem;
+    background: linear-gradient(140deg, var(--accent), #ff7a34);
+    color: #fff;
+    font-weight: 700;
+    transition: transform 0.14s ease, filter 0.14s ease;
+}
+
+button:hover {
+    filter: brightness(1.03);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.ghost {
+    background: #fff;
+    color: var(--ink-0);
+}
+
+.board {
+    margin-top: 1.35rem;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    padding: 1.2rem;
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+}
+
+.board-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+}
+
+.filter-bar {
+    display: grid;
+    grid-template-columns: 1fr 170px 140px;
+    gap: 0.7rem;
+    margin-bottom: 0.9rem;
+}
+
+.filter-control {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.filter-control.compact {
+    min-width: 0;
+}
+
+.flag-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.flag-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fff;
+    padding: 1rem;
+    display: grid;
+    gap: 0.65rem;
+}
+
+.flag-title {
+    font-weight: 700;
+    font-size: 1.04rem;
+}
+
+.flag-meta {
+    margin: 0;
+    color: var(--ink-1);
+    font-size: 0.86rem;
+}
+
+.badges {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge.pending {
+    background: #fff3da;
+}
+
+.badge.relevant {
+    background: #ddf8e9;
+}
+
+.badge.irrelevant {
+    background: #ffe3e3;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    flex: 1;
+    min-width: 118px;
+}
+
+.hidden {
+    display: none;
+}
+
+.empty {
+    margin: 1rem 0 0;
+    color: var(--ink-1);
+}
+
+.pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.page-info {
+    margin: 0;
+    min-width: 110px;
+    text-align: center;
+    color: var(--ink-1);
+    font-weight: 500;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+.toast {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: #2b2523;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 0.55s ease forwards;
+}
+
+.controls.reveal {
+    animation-delay: 0.1s;
+}
+
+.board.reveal {
+    animation-delay: 0.18s;
+}
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 960px) {
+
+    .stats-grid,
+    .controls,
+    .flag-list,
+    .filter-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .shell {
+        padding: 1.2rem 0 2rem;
+    }
+
+    .hero,
+    .board,
+    .panel {
+        border-radius: 18px;
+    }
+}
